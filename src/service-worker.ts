@@ -78,3 +78,11 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
+
+//■サブスクリプションの登録
+self.registration.pushManager.subscribe({
+  userVisibleOnly: true,
+});
+self.addEventListener("push", e => {
+
+});

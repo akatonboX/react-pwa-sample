@@ -1,0 +1,15 @@
+@mixin labelAndValue($labelMinWidth: none){
+  list-style: none;
+  display: flex;
+  > :first-child{//ラベル
+    min-width: $labelMinWidth;
+    margin-right: 0.5rem;
+  }
+  > :first-child::after{//ラベルと値の区切り
+    content: ":";
+    margin: 0 0.5rem 0 0.5rem;
+  }
+  > :last-child{//値
+    flex-grow: 1;
+  }
+}

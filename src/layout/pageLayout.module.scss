@@ -1,0 +1,67 @@
+@use "../style/common";
+
+$pageMargin: 0px;
+$contentMargin: 0px;
+.root{
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  
+  background-color: white;
+  > :first-child{//ヘッダ
+    margin: 0px;   
+    .appTitle{
+      font-weight: bold;
+      font-size: 30px;
+    }
+  }
+  > :nth-child(2){//コンテンツ
+    margin: 0px $contentMargin 5px $contentMargin;
+
+    flex-grow: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    > :first-child{
+      margin: 30px;
+    }
+    > :last-child{
+      flex-grow: 1;
+      overflow: scroll;
+      > :first-child{
+        margin: 0px 30px 30px 30px ;
+      }
+    }
+  }
+  > :nth-child(3){//フッター
+    min-height: 30px;
+    background-color: black;
+    color: white;
+    > div{
+      text-align: center;
+    }
+  }
+
+  .toolbarLayout{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    > :first-child{
+      display: flex;
+      > a{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
+    > :nth-child(2){
+      flex-grow: 1;
+      display: flex;
+    }
+    > :last-child{
+      display: flex;
+    }
+  }
+}
