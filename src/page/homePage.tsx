@@ -8,19 +8,29 @@ export const HomePage = function(
 {
   const [beforeInstallPromptEvent, setBeforeInstallPromptEvent] = React.useState<BeforeInstallPromptEvent | undefined>(undefined);
    
+  //■beforeinstallpromptイベントのハンドラ。eventをstateに保持。
+  // useEffect内でイベント登録し、cleanするために外だしで定義。
+  const onBeforeInstallPrompt = (e: any) => {
+    console.log("★onBeforeInstallPrompt")
+    e.preventDefault();
+    setBeforeInstallPromptEvent(e as BeforeInstallPromptEvent);
+  };
+
+  //■beforeinstallpromptのイベント登録
   React.useEffect(() => {
-    window.addEventListener("beforeinstallprompt", (e => {
-      e.preventDefault();
-      setBeforeInstallPromptEvent(e as BeforeInstallPromptEvent);
-    }));
+    window.addEventListener("beforeinstallprompt", onBeforeInstallPrompt);
+    return () => {
+      window.removeEventListener("beforeinstallprompt", onBeforeInstallPrompt);
+    };
   }, []);
+
   return (
     <PageLayout title="Home">
       <div className={styles.root}>
         {
           beforeInstallPromptEvent != null ?
-            <button></button>
-          : <>aaa</>
+            <button onClick={e => {e.preventDefault(); beforeInstallPromptEvent.prompt();}}>インストール</button>
+          : <>インストール済み</>
         }
       </div>
     </PageLayout>

@@ -62,6 +62,9 @@ registerRoute(
   new StaleWhileRevalidate({
     cacheName: 'images',
     plugins: [
+
+
+
       // Ensure that once this runtime cache reaches a maximum size the
       // least-recently used images are removed.
       new ExpirationPlugin({ maxEntries: 50 }),
@@ -77,12 +80,11 @@ self.addEventListener('message', (event) => {
   }
 });
 
-// Any other custom service worker logic can go here.
-
+const a = 3;
 //■サブスクリプションの登録
-self.registration.pushManager.subscribe({
-  userVisibleOnly: true,
-});
-self.addEventListener("push", e => {
+// self.registration.pushManager.subscribe({
+//   userVisibleOnly: true,
+// });
+// self.addEventListener("push", e => {
 
-});
+// });

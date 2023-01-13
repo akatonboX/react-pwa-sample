@@ -4,13 +4,31 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { HomePage } from './page/homePage';
 import { Test1Page } from './page/test1Page';
 import { NotFoundPage } from './page/notFoundPage';
+import { VideoTestPage } from './page/videoTestPage';
+import { CameraInputTestPage } from './page/cameraInputTestPage';
+import { QrReaderTest } from './page/qrReaderTestPage';
 
 function App() {
+  
+  // React.useEffect(() => {
+  //   (async() => {
+  //     if(navigator && navigator.serviceWorker){
+  //       const registration = await navigator.serviceWorker.getRegistration();
+  //       if(registration){
+  //         registration.update();
+  //       }
+  //     }      
+  //   })()
+    
+  // });
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route index element={<HomePage />} />
         <Route path="/test1" element={<Test1Page />} />
+        <Route path="/videoTest" element={<VideoTestPage />} />
+        <Route path="/cameraInputTest" element={<CameraInputTestPage />} />
+        <Route path="/qrReaderTest" element={<QrReaderTest />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

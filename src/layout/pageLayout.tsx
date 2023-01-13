@@ -4,7 +4,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { AppBar, Avatar, Box, Container, IconButton, MenuItem, Toolbar, Tooltip, Typography } from "@mui/material";
 import { DropdownMenu } from "../component/dropdownMenu";
 import { LoadingPage } from "../component/loadingPage";
-
+import { v4 as uuid } from "uuid"; 
+import { APP_VERSION } from "../version";
 
 export const PageLayout = (
   props: {
@@ -39,8 +40,38 @@ export const PageLayout = (
                 <div>
                   <DropdownMenu
                     menuItems={[
+                      <MenuItem onClick={e => {
+                        e.preventDefault();
+                        const paramsString = window.location.search.substring(1);
+                        if(paramsString){
+                          const params = paramsString.split('&').map(item => item.split("="));
+                          const newParamsString = params.reduce((previousValue, currentValue, index, items) => {
+                            const key = currentValue[0];
+                            const value = key === "version" ? uuid() : currentValue.length > 0 ? currentValue[1] : undefined;
+                            return `${previousValue}${index === 0 ? "" : "&"}${key}${value != null ? `=${value}` : ""}` 
+                          }, "");
+                          window.location.replace(`${window.location.origin}${window.location.pathname}?${newParamsString}${paramsString.indexOf("version=") < 0 ? `&version=${uuid()}` : ""}`);
+                        }
+                        else{
+                          window.location.replace(`${window.location.origin}${window.location.pathname}?version=${uuid()}`);
+                        }
+                       
+                      }}>★github page更新</MenuItem>,
+                      <MenuItem onClick={async e => {
+                        e.preventDefault();
+                        if(navigator && navigator.serviceWorker){
+                          const registration = await navigator.serviceWorker.getRegistration();
+                          if(registration){
+                            registration.update();
+                          }
+                        }      
+                      }}>★Service Worker更新</MenuItem>,
                       <MenuItem onClick={e => {e.preventDefault();navigate("/")}}>Home</MenuItem>,
                       <MenuItem onClick={e => {e.preventDefault();navigate("/test1")}}>Test1</MenuItem>,
+                      <MenuItem onClick={e => {e.preventDefault();navigate("/videoTest")}}>video test</MenuItem>,
+                      <MenuItem onClick={e => {e.preventDefault();navigate("/cameraInputTest")}}>camera test</MenuItem>,
+                      <MenuItem onClick={e => {e.preventDefault();navigate("/qrReaderTest")}}>qrReader test</MenuItem>,
+                      <MenuItem onClick={e => {e.preventDefault();alert(APP_VERSION ?? "none")}}>app version</MenuItem>,
                     ]}
                     children = {(open, isOpen) => {
                       return (
