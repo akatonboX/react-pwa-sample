@@ -15,11 +15,7 @@ export const VideoTestPage = function(
       const stream = await navigator.mediaDevices.getUserMedia( 
         { 
           audio: false,
-          video: { 
-            facingMode: {
-              exact: 'environment'
-            }
-          } 
+          video: true
         }
       );
       videoElement.current.srcObject = stream;
@@ -33,8 +29,7 @@ export const VideoTestPage = function(
   return (
     <PageLayout title="Video Test">
       <div className={styles.root}>
-        <video ref={videoElement} />
-        
+        <video ref={videoElement} muted={true} playsInline={true} />
       </div>
     </PageLayout>
   )

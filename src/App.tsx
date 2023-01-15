@@ -6,7 +6,8 @@ import { Test1Page } from './page/test1Page';
 import { NotFoundPage } from './page/notFoundPage';
 import { VideoTestPage } from './page/videoTestPage';
 import { CameraInputTestPage } from './page/cameraInputTestPage';
-import { QrReaderTest } from './page/qrReaderTestPage';
+import { QrReaderTestPage } from './page/qrReaderTestPage';
+import { QrReaderTest2Page } from './page/qrReaderTest2Page';
 
 function App() {
   
@@ -28,7 +29,9 @@ function App() {
         <Route path="/test1" element={<Test1Page />} />
         <Route path="/videoTest" element={<VideoTestPage />} />
         <Route path="/cameraInputTest" element={<CameraInputTestPage />} />
-        <Route path="/qrReaderTest" element={<QrReaderTest />} />
+        <Route path="/qrReaderTest" element={<QrReaderTestPage />} />
+        <Route path="/qrReaderTest2" element={<QrReaderTest2Page />} />
+        
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

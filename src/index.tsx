@@ -22,10 +22,8 @@ root.render(
 // serviceWorkerRegistration.unregister();
 serviceWorkerRegistration.register({
   onUpdate: (registration: ServiceWorkerRegistration) => {
-    console.log("★serviceWorkerRegistration-onUpdate");
     //■新しいservice workerがある場合は、提供する。(取得しても、デフォルトではブラウザが閉じるまで、waiting状態になっている)
     if (registration.waiting) {
-      console.log("★service workerの強制更新")
       registration.waiting?.postMessage({ type: 'SKIP_WAITING' });
       window.location.reload();
     }

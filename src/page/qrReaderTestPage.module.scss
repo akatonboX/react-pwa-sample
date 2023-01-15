@@ -1,5 +1,7 @@
 @use "../style/common";
 
 .root{
-
+  > video{
+    width: 100%;
+  }
 }
