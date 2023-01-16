@@ -3,54 +3,22 @@ import React from "react";
 import { PageLayout } from "../layout/pageLayout";
 import styles from "./qrReaderTest3Page.module.scss";
 
-
-type Size = {
-  width: number,
-  height: number;
-}
 export const QrReaderTest3Page = function(
   props: {
   }
 ) 
 {
-  const canvasElement = React.useRef<HTMLCanvasElement>(null);
-
   const viewElement = React.useRef<HTMLDivElement>(null);
   const videoElement = React.useRef<HTMLVideoElement>(null);
   const videoStream = React.useRef<MediaStream>();
   const scannerControls = React.useRef<IScannerControls | null>(null);
-  // //■videoを包括するエレメントサイズ。(固定)
-  // const [viewSize, setViewSize] = React.useState<Size | undefined>(undefined);
-  // //■videoのサイズ
-  // const [size, setSize] = React.useState<Size | undefined>(undefined);
   
   //■ピンチ開始時のサイズ
   const startPinchDistance = React.useRef<number | undefined>(undefined);
   const startZoom = React.useRef(1);
 
-  //■zoomのrete
-  // const zoom = React.useRef(1);
-
-  //■QRの読み取り用
-  const [timer, setTimer] = React.useState(Number.MIN_VALUE);
 
   React.useEffect(() => {
-    //■ViewElementのサイズを固定
-    if(viewElement.current == null)throw Error("viewElementがない");
-    // setViewSize({
-    //   width: viewElement.current.clientWidth, 
-    //   height: viewElement.current.clientHeight
-    // });
-    
-    //■<video>のサイズ取得
-    if(videoElement.current == null)throw Error("videoElementがない");
-    // const size = {
-    //   width: videoElement.current.clientWidth, 
-    //   height: videoElement.current.clientHeight
-    // };
-    // setSize(size);
-
-
     (async() => {
       //■<video>とカメラの接続
       if(videoElement.current == null)throw Error("videoElementがない");
@@ -86,49 +54,6 @@ export const QrReaderTest3Page = function(
    
   }, []);
 
-
-  //■Qcodeの読み取り
-
-  React.useEffect(() => {
-    // window.setTimeout(async () => {
-    //   // if(startPinchDistance.current != null){//ピンチ中は実行しない
-    //     //■ViewElementをcanvusに描画
-    //     if(canvasElement.current == null)throw Error("")
-    //     if(viewElement.current == null)throw Error("viewElementが未定義");
-    //     if(videoElement.current == null)throw Error("videoElementが未定義");
-
-    //     //■サイズ計算
-    //     const [width, height] = [Math.min(viewElement.current.clientWidth, videoElement.current.clientWidth) , Math.min(viewElement.current.clientHeight, videoElement.current.clientHeight)];
-    //     const [marginX, marginY] = [(videoElement.current.clientWidth - width) / 2 , (videoElement.current.clientHeight - height) / 2];
-    //     const [rateX, rateY] = [videoElement.current.videoWidth / videoElement.current.clientWidth, videoElement.current.videoHeight / videoElement.current.clientHeight];
-
-    //     //■canvasに表示領域をコピー
-    //     const canvas = canvasElement.current;
-    //     canvas.width = width;
-    //     canvas.height = height;
-    //     const context = canvas.getContext("2d");
-    //     if(context == null)throw Error("canvas.getContext()で取得できなかった");
-    //     context.drawImage(videoElement.current, marginX * rateX, marginY * rateY, width * rateX, height * rateY, 0, 0, width * rateX, height * rateY);
-   
-       
-    //     //■QRコード読み取り
-    //     const codeReader = new BrowserQRCodeReader();
-    //     try{
-    //       const result = await codeReader.decodeFromImageUrl(canvas.toDataURL());
-    //       alert(result.getText());
-    //       window.location.reload();
-    //     }
-    //     catch(error){
-    //       console.log("★error", error)
-    //     }
-
-
-    //   // }
-    //   setTimer(timer + 1);
-    // }, 500);
-  }, [timer]);
-
-  
   //■bodyのピンチによるzoomを無効化
   const disableBodyZoom = (e: TouchEvent) => {
     if (e.touches.length > 1) {
