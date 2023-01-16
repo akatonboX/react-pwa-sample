@@ -29,8 +29,8 @@ export const HomePage = function(
       <div className={styles.root}>
         {
           beforeInstallPromptEvent != null ?
-            <button onClick={e => {e.preventDefault(); beforeInstallPromptEvent.prompt();}}>インストール</button>
-          : <>インストール済み</>
+            <button onClick={e => {e.preventDefault(); beforeInstallPromptEvent.prompt();window.location.reload();}}>インストール</button>
+          : window.matchMedia('(display-mode: standalone)').matches ? <>PWA</> : <>インストール済み</>
         }
       </div>
     </PageLayout>

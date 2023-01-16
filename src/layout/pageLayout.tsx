@@ -74,6 +74,8 @@ export const PageLayout = (
                       <MenuItem onClick={e => {e.preventDefault();navigate("/cameraInputTest")}}>camera test</MenuItem>,
                       <MenuItem onClick={e => {e.preventDefault();navigate("/qrReaderTest")}}>qrReader test</MenuItem>,
                       <MenuItem onClick={e => {e.preventDefault();navigate("/qrReaderTest2")}}>qrReader test2</MenuItem>,
+                      <MenuItem onClick={e => {e.preventDefault();navigate("/qrReaderTest3")}}>qrReader test3</MenuItem>,
+                      
                     ]}
                     children = {(open, isOpen) => {
                       return (

@@ -14,7 +14,8 @@ export const QrReaderTestPage = function(
     (async() => {
       if(videoElement.current == null)throw Error("videoElementがありません。");
       const codeReader = new BrowserQRCodeReader();
-      scannerControls.current = await codeReader.decodeFromVideoDevice(undefined, videoElement.current, (result, error, controls) => {
+      //scannerControls.current = await codeReader.decodeFromVideoDevice(undefined, videoElement.current, (result, error, controls) => {
+      scannerControls.current = await codeReader.decodeFromConstraints({video: {facingMode: { exact: "environment" }, pan: true, tilt: true, zoom: true }} as MediaStreamConstraints, videoElement.current, (result, error, controls) => {
         console.log("★", result, error)
         if(error == null && result != null && result.getText() != null){
           controls.stop();
