@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://akatonbox.github.io/react-pwa-sample/",
   "dependencies": {
+    "@auth0/auth0-react": "^1.12.1",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/material": "^5.11.4",

@@ -6,6 +6,7 @@ import { DropdownMenu } from "../component/dropdownMenu";
 import { LoadingPage } from "../component/loadingPage";
 import { v4 as uuid } from "uuid"; 
 import { APP_VERSION } from "../version";
+import { usePwa } from "../lib/pwa";
 
 export const PageLayout = (
   props: {
@@ -22,6 +23,7 @@ export const PageLayout = (
     document.title = `サンプル - ${props.title}`;
   }, [props.title]);
 
+  const pwa = usePwa();
   return (
     <>
       <div className={styles.root}>
@@ -59,12 +61,13 @@ export const PageLayout = (
                       // }}>★github page更新</MenuItem>,
                       <MenuItem onClick={async e => {
                         e.preventDefault();
-                        if(navigator && navigator.serviceWorker){
-                          const registration = await navigator.serviceWorker.getRegistration();
-                          if(registration){
-                            registration.update();
-                          }
-                        }      
+                        pwa.update();
+                        // if(navigator && navigator.serviceWorker){
+                        //   const registration = await navigator.serviceWorker.getRegistration();
+                        //   if(registration){
+                        //     registration.update();
+                        //   }
+                        // }      
                       }}>Service Worker更新</MenuItem>,
                       <MenuItem onClick={e => {e.preventDefault();alert(APP_VERSION ?? "none")}}>app version</MenuItem>,
                       <hr />,
@@ -75,7 +78,7 @@ export const PageLayout = (
                       <MenuItem onClick={e => {e.preventDefault();navigate("/qrReaderTest")}}>qrReader test</MenuItem>,
                       <MenuItem onClick={e => {e.preventDefault();navigate("/qrReaderTest2")}}>qrReader test2</MenuItem>,
                       <MenuItem onClick={e => {e.preventDefault();navigate("/qrReaderTest3")}}>qrReader test3</MenuItem>,
-                      
+                      <MenuItem onClick={e => {e.preventDefault();navigate("/needLogin")}}>ログインが必要なページ</MenuItem>,
                     ]}
                     children = {(open, isOpen) => {
                       return (
