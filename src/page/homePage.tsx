@@ -62,6 +62,7 @@ export const HomePage_BK = function(
             <button onClick={e => {e.preventDefault(); beforeInstallPromptEvent.prompt();}}>インストール</button>
           : window.matchMedia('(display-mode: standalone)').matches ? <>PWA</> : <>インストール済み</>
         }
+        <a href={window.location.origin + process.env.PUBLIC_URL }>test</a>
       </div>
     </PageLayout>
   )
