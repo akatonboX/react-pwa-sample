@@ -1,12 +1,13 @@
 import React from "react";
 import styles from './pageLayout.module.scss';
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useHistory} from "react-router-dom";
 import { AppBar, Avatar, IconButton, MenuItem, Toolbar, Tooltip, Typography } from "@mui/material";
 import { DropdownMenu } from "../component/dropdownMenu";
 import { LoadingPage } from "../component/loadingPage";
 import { v4 as uuid } from "uuid"; 
 import { APP_VERSION } from "../version";
 import { usePwa } from "../lib/pwa";
+import { nativeProxy } from "../lib/nativeProxy";
 
 export const PageLayout = (
   props: {
@@ -16,8 +17,7 @@ export const PageLayout = (
   }
 ) => {
   const isInitialized = props.isInitialized != null ? props.isInitialized : true;
-  const navigate = useNavigate();
-
+  const history = useHistory();
   //■Windowタイトルの修正
   React.useEffect(() => {
     document.title = `サンプル - ${props.title}`;
@@ -58,7 +58,7 @@ export const PageLayout = (
                       //     window.location.replace(`${window.location.origin}${window.location.pathname}?version=${uuid()}`);
                       //   }
                        
-                      // }}>★github page更新</MenuItem>,
+                      // }}>github page更新</MenuItem>,
                       <MenuItem onClick={async e => {
                         e.preventDefault();
                         pwa.update();
@@ -71,14 +71,34 @@ export const PageLayout = (
                       }}>Service Worker更新</MenuItem>,
                       <MenuItem onClick={e => {e.preventDefault();alert(APP_VERSION ?? "none")}}>app version</MenuItem>,
                       <hr />,
-                      <MenuItem onClick={e => {e.preventDefault();navigate("/")}}>Home</MenuItem>,
-                      <MenuItem onClick={e => {e.preventDefault();navigate("/test1")}}>Test1</MenuItem>,
-                      <MenuItem onClick={e => {e.preventDefault();navigate("/videoTest")}}>video test</MenuItem>,
-                      <MenuItem onClick={e => {e.preventDefault();navigate("/cameraInputTest")}}>camera test</MenuItem>,
-                      <MenuItem onClick={e => {e.preventDefault();navigate("/qrReaderTest")}}>qrReader test</MenuItem>,
-                      <MenuItem onClick={e => {e.preventDefault();navigate("/qrReaderTest2")}}>qrReader test2</MenuItem>,
-                      <MenuItem onClick={e => {e.preventDefault();navigate("/qrReaderTest3")}}>qrReader test3</MenuItem>,
-                      <MenuItem onClick={e => {e.preventDefault();navigate("/needLogin")}}>ログインが必要なページ</MenuItem>,
+                      <MenuItem onClick={e => {e.preventDefault();history.push("/")}}>Home</MenuItem>,
+                      <MenuItem onClick={e => {e.preventDefault();history.push("/test1")}}>Test1</MenuItem>,
+                      <MenuItem onClick={e => {e.preventDefault();history.push("/videoTest")}}>video test</MenuItem>,
+                      <MenuItem onClick={e => {e.preventDefault();history.push("/cameraInputTest")}}>camera test</MenuItem>,
+                      <MenuItem onClick={e => {e.preventDefault();history.push("/qrReaderTest")}}>qrReader test</MenuItem>,
+                      <MenuItem onClick={e => {e.preventDefault();history.push("/qrReaderTest2")}}>qrReader test2</MenuItem>,
+                      <MenuItem onClick={e => {e.preventDefault();history.push("/qrReaderTest3")}}>qrReader test3</MenuItem>,
+                      <MenuItem onClick={e => {e.preventDefault();history.push("/needLogin")}}>ログインが必要なページ</MenuItem>,
+                      <MenuItem onClick={e => {e.preventDefault();window.location.reload();}}>リロード</MenuItem>,
+                      <hr />,
+                      <MenuItem onClick={e => {e.preventDefault();alert((window as any)["__suppoetedCommands"]);}}>supoortedCommand確認</MenuItem>,
+                      <MenuItem onClick={async e => {
+                        e.preventDefault();
+                        const result = await nativeProxy.commandA();
+                        alert(result.text);
+
+                      }}>Command A</MenuItem>,
+                      <MenuItem onClick={async e => {
+                        e.preventDefault();
+                        if(nativeProxy.getSupportedCommands().indexOf("getQrStringFromCamera") >= 0){
+                          const result = await nativeProxy.getQrStringFromCamera();
+                          alert(result ?? "スキャンがキャンセルされました");
+                        }
+                        else{
+                          alert("サポートされない機能です。");
+                        }
+
+                      }}>QRコード</MenuItem>,
                     ]}
                     children = {(open, isOpen) => {
                       return (

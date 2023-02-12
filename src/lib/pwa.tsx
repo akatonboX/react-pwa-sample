@@ -63,11 +63,9 @@ export const PwaProvider = (
     isInstalledApp: window.matchMedia('(display-mode: standalone)').matches,
     update: update
   });
-  console.log("★PwaProvider", pwa)
   //■beforeinstallpromptイベントのハンドラ。eventをstateに保持。
   // useEffect内でイベント登録し、cleanするために外だしで定義。
   const onBeforeInstallPrompt = (e: any) => {
-    console.log("★onBeforeInstallPrompt")
     e.preventDefault();
     setPwa({
       canInstall: true,
@@ -77,14 +75,12 @@ export const PwaProvider = (
     });
   };
   const onAppinstalled  = (e: any) => {
-    console.log("★onAppinstalled")
     e.preventDefault();
     window.location.reload();
   };
 
   //■beforeinstallpromptのイベント登録
   React.useEffect(() => {
-    console.log("★useEffect")
     window.addEventListener("beforeinstallprompt", onBeforeInstallPrompt);
     window.addEventListener("appinstalled", onAppinstalled);
     return () => {

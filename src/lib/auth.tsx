@@ -4,7 +4,6 @@
  */
 import { Auth0ContextInterface, Auth0Provider, useAuth0, User } from '@auth0/auth0-react';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { LoadingPage } from '../component/loadingPage';
 
 
@@ -83,7 +82,7 @@ export const LoginProvider = function(
   }
 ) 
 {
-  const navigate = useNavigate();
+  
   return (
     <Auth0Provider
       domain="dev-sa5x8co1.jp.auth0.com"
@@ -95,8 +94,7 @@ export const LoginProvider = function(
       onRedirectCallback={(appState, user) => {
         console.log("★onRedirectCallback", appState, user)
         const rediret = appState != null && appState.returnTo != null ? appState.returnTo : "/";
-        navigate(rediret, {replace: true});
-
+        window.location.replace(rediret);
       }}
       
     >

@@ -23,7 +23,7 @@ export const DropdownMenu = function(
   return (
     <>
       {props.children(openMenu, isOpen)}
-      <Menu {...menuProps} anchorEl={anchorElement} open={Boolean(anchorElement)} onClose={() => {setAnchorElement(null)}} >
+      <Menu {...menuProps} anchorEl={anchorElement} open={Boolean(anchorElement)} onClose={() => {setAnchorElement(null)}}  >
         {props.menuItems.map((menuItem, index) => {
           const newProps = lodash.cloneDeep(menuItem.props);
           newProps["key"] = index;
