@@ -13,6 +13,7 @@ import { PwaProvider } from './lib/pwa';
 import { LoginProvider } from './lib/auth';
 import { NeedLoginPage } from './page/needLoginPage';
 import { UrlTransitionBlockProvider } from './lib/urlTransitionBlock';
+import { MessageboxProvider } from './lib/messagebox';
 
 // function AppfotRouterv6() {
   
@@ -45,21 +46,23 @@ function App() {
   
   return (
     <PwaProvider>
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <LoginProvider>
-          <Switch>
-            <Route path="/" component={HomePage} exact/>
-            <Route path="/test1" component={Test1Page} exact/>
-            <Route path="/videoTest" component={VideoTestPage} exact/>
-            <Route path="/cameraInputTest" component={CameraInputTestPage} exact/>
-            <Route path="/qrReaderTest" component={QrReaderTestPage} exact/>
-            <Route path="/qrReaderTest2" component={QrReaderTest2Page} exact/>
-            <Route path="/qrReaderTest3" component={QrReaderTest3Page} exact/>
-            <Route path="/needLogin" component={NeedLoginPage} exact/>
-            <Route path="/" component={NotFoundPage} />
-          </Switch>
-        </LoginProvider>
-      </BrowserRouter>
+      <MessageboxProvider>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
+          <LoginProvider>
+            <Switch>
+              <Route path="/" component={HomePage} exact/>
+              <Route path="/test1" component={Test1Page} exact/>
+              <Route path="/videoTest" component={VideoTestPage} exact/>
+              <Route path="/cameraInputTest" component={CameraInputTestPage} exact/>
+              <Route path="/qrReaderTest" component={QrReaderTestPage} exact/>
+              <Route path="/qrReaderTest2" component={QrReaderTest2Page} exact/>
+              <Route path="/qrReaderTest3" component={QrReaderTest3Page} exact/>
+              <Route path="/needLogin" component={NeedLoginPage} exact/>
+              <Route path="/" component={NotFoundPage} />
+            </Switch>
+          </LoginProvider>
+        </BrowserRouter>
+      </MessageboxProvider>
     </PwaProvider>
   );
 }

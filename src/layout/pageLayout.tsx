@@ -8,6 +8,7 @@ import { v4 as uuid } from "uuid";
 import { APP_VERSION } from "../version";
 import { usePwa } from "../lib/pwa";
 import { nativeProxy } from "../lib/nativeProxy";
+import { useMessagebox } from "../lib/messagebox";
 
 export const PageLayout = (
   props: {
@@ -24,6 +25,8 @@ export const PageLayout = (
   }, [props.title]);
 
   const pwa = usePwa();
+
+  const messagebox = useMessagebox();
   return (
     <>
       <div className={styles.root}>
@@ -92,10 +95,10 @@ export const PageLayout = (
                         e.preventDefault();
                         if(nativeProxy.getSupportedCommands().indexOf("getQrStringFromCamera") >= 0){
                           const result = await nativeProxy.getQrStringFromCamera();
-                          alert(result ?? "スキャンがキャンセルされました");
+                          await messagebox.show("情報", result ?? "スキャンがキャンセルされました。", "ok");
                         }
                         else{
-                          alert("サポートされない機能です。");
+                          await messagebox.show("情報", "サポートされない機能です。", "ok");
                         }
 
                       }}>QRコード</MenuItem>,
