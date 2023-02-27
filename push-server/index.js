@@ -3,7 +3,41 @@ const app = new Koa()
 const router = require('koa-router')();
 const webpush = require('web-push')
 router.get('/', async (ctx, next) => {
-  ctx.body = 'Hello World2'
+  ctx.body = `
+  <html lang="ja">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Push送信画面</title>
+    <script>
+    async function sendPushMessage(){
+      const message = document.getElementById('message').value;
+    
+      // FetchAPIのオプション準備
+      const param = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+    
+        // リクエストボディ
+        body: JSON.stringify({ message }),
+      };
+    console.log("★")
+      await (await fetch('/api/sendMessage', param)).text();
+    }
+    </script>
+  </head>
+  
+  <body>
+    <h1>Push送信画面</h1>
+    <form>
+      <input type="text" name="message" id="message" value="{'test': 'gige' }" />
+      <button type="button" onClick="sendPushMessage()">Push送信</button>
+    </form>
+  </body>
+  </html>
+  `;
 })
 
 const vapidKeys = webpush.generateVAPIDKeys();
@@ -47,7 +81,7 @@ router.post('/api/registEndpoint', async (ctx, next) => {
  * 登録されたendpointへメッセージを送信するApi
  * sendPush.jsから呼び出される
  */
-router.post('/sendMessage', async (req, res, next) => {
+router.post('/api/sendMessage', async (req, res, next) => {
   console.log(endPoint);
   try {
     const response = await webpush.sendNotification(
