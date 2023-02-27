@@ -80,58 +80,58 @@ self.addEventListener('message', (event) => {
   }
 });
 
-//■
-const urlB64ToUint8Array = (base64String: string) => {
-  const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-  const base64 = (base64String + padding)
-    .replace(/\-/g, '+')
-    .replace(/_/g, '/');
-  const rawData = window.atob(base64);
-  const outputArray = new Uint8Array(rawData.length);
-  for (let i = 0; i < rawData.length; ++i) {
-    outputArray[i] = rawData.charCodeAt(i);
-  }
-  return outputArray;
-};
+// //■
+// const urlB64ToUint8Array = (base64String: string) => {
+//   const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+//   const base64 = (base64String + padding)
+//     .replace(/\-/g, '+')
+//     .replace(/_/g, '/');
+//   const rawData = window.atob(base64);
+//   const outputArray = new Uint8Array(rawData.length);
+//   for (let i = 0; i < rawData.length; ++i) {
+//     outputArray[i] = rawData.charCodeAt(i);
+//   }
+//   return outputArray;
+// };
 
-//■サーバから公開キーを取得
-const vapidPublicKey = await (await fetch('http://localhost/api/vapidPublicKey')).text();
+// //■サーバから公開キーを取得
+// const vapidPublicKey = await (await fetch('http://localhost/api/vapidPublicKey')).text();
 
-//■サブスクリプションの登録
-await(await self.registration.pushManager.subscribe({
-  userVisibleOnly: false,
-  applicationServerKey: urlB64ToUint8Array(vapidPublicKey),
-}));
+// //■サブスクリプションの登録
+// await(await self.registration.pushManager.subscribe({
+//   userVisibleOnly: false,
+//   applicationServerKey: urlB64ToUint8Array(vapidPublicKey),
+// }));
 
-// pushイベントハンドラを登録
-self.addEventListener('push', (event) => {
-  // 通知設定が行われているかをチェック
-  if (!self.Notification || self.Notification.permission !== 'granted') {
-    // 通知設定が行われていなければ何もせず終了
-    return;
-  }
+// // pushイベントハンドラを登録
+// self.addEventListener('push', (event) => {
+//   // 通知設定が行われているかをチェック
+//   if (!self.Notification || self.Notification.permission !== 'granted') {
+//     // 通知設定が行われていなければ何もせず終了
+//     return;
+//   }
 
-  // 送信されたデータを取得
-  if (event.data) {
-    const data = event.data.text();
-    console.log(data);
+//   // 送信されたデータを取得
+//   if (event.data) {
+//     const data = event.data.text();
+//     console.log(data);
 
-    event.waitUntil(
-      self.registration.showNotification('Push Notification', {
-        body: data,
-      }),
-    );
-  }
-});
+//     event.waitUntil(
+//       self.registration.showNotification('Push Notification', {
+//         body: data,
+//       }),
+//     );
+//   }
+// });
 
-// 表示された通知をクリックされた場合に発生するイベント
-self.addEventListener('notificationclick', function (event) {
-  event.waitUntil(
-    self.registration.showNotification("Push通知タイトル", {
-      body: "Push通知本文"
-    })
-  )
-});
+// // 表示された通知をクリックされた場合に発生するイベント
+// self.addEventListener('notificationclick', function (event) {
+//   event.waitUntil(
+//     self.registration.showNotification("Push通知タイトル", {
+//       body: "Push通知本文"
+//     })
+//   )
+// });
 
 
 

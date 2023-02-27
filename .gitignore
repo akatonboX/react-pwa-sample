@@ -22,3 +22,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 node_modules
+
+#ローカル実行のために/buildからコピーしたserviecworker関連ファイルを管理外にする。
+/public/service-worker*

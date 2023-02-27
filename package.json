@@ -44,10 +44,13 @@
   },
   "scripts": {
     "start": "cross-env PUBLIC_URL=/ react-scripts start",
+    "start-with-service-worker": "yarn build && node -e \"require('fs').copyFileSync('./build/service-worker.js', './public/service-worker.js')\" && cross-env PUBLIC_URL=/ REACT_APP_IS_FORCE_SEWRVICE_WORKER=true react-scripts start",
     "build": "cross-env PUBLIC_URL=/assets/app/ react-scripts build",
+    "build-native": "cross-env PUBLIC_URL=/assets/app/ react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "yarn build && gh-pages -d build",
+    "build-sw": "tsc src/service-worker.ts",
     "pushsv": "node ./push-server/index.js"
   },
   "eslintConfig": {
